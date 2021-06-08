@@ -40,7 +40,8 @@ public class TestPets {
 
 //        Création d'une nouvelle adresse
         Address address = new Address("12", "rue du zoo", "34130", "ZooCity");
-        petStore.setAddress(address);
+ //       petStore.setAddress(address); OU
+        address.changePetStore(petStore);
         em.persist(address);
         Address address2 = new Address("25", "rue de la ferme", "32548", "FarmVille");
         petStore.setAddress(address2);

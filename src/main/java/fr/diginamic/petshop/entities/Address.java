@@ -11,6 +11,7 @@ public class Address implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     private String number;
     private String street;
     private String zipCode;
@@ -84,10 +85,18 @@ public class Address implements Serializable {
 
 
     public void setPetStore(PetStore petStore) {
-        if (petStore == null) {
+//        if (petStore == null) {
+//            this.petStore.setAddress(null);
+//        } else {
+//            petStore.setAddress(this);
+//        }
+        this.petStore = petStore;
+    }
+
+    //Nouvelle méthode cree par Loïc pour liaison one to one
+    public void changePetStore(PetStore petStore) {
+        if (petStore != null){
             petStore.setAddress(null);
-        } else {
-            petStore.setAddress(this);
         }
     }
 

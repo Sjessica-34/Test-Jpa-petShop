@@ -71,7 +71,15 @@ public class PetStore implements Serializable {
     }
 
     public void setAddress(Address address) {
+        if (this.address != null) {
+            this.address.setPetStore(null); // attention ne pas faire remove.animal (boucle infinie)
+        }
+
         this.address = address;
+
+        if (address != null) {
+            address.setPetStore(this);
+        }
     }
 
     public Set<Animal> getAnimals() {
@@ -107,7 +115,7 @@ public class PetStore implements Serializable {
     }
 
     public void removeProduct(Product product) {
-        if (product != null){
+        if (product != null) {
             product.getPetStores().remove(this);
             this.getProducts().remove(product);
         }
