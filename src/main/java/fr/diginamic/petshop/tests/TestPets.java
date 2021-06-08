@@ -24,21 +24,38 @@ public class TestPets {
 
 //       Création d'un nouveau Petstore
         PetStore petStore = new PetStore();
-//      PetStore petStore2 = new PetStore();
-//      PetStore petStore3 = new PetStore();
-
         petStore.setName("L'arche de Noé");
         petStore.setManagerName("Jessica");
+        em.persist(petStore);
 
+        PetStore petStore2 = new PetStore();
+        petStore2.setName("La ferme du Cantal");
+        petStore2.setManagerName("Loïc");
+        em.persist(petStore2);
+
+        PetStore petStore3 = new PetStore();
+        petStore3.setName("L'ami du cheval");
+        petStore3.setManagerName("Victoria");
+        em.persist(petStore3);
 
 //        Création d'une nouvelle adresse
         Address address = new Address("12", "rue du zoo", "34130", "ZooCity");
         petStore.setAddress(address);
-
+        em.persist(address);
+        Address address2 = new Address("25", "rue de la ferme", "32548", "FarmVille");
+        petStore.setAddress(address2);
+        em.persist(address2);
+        Address address3 = new Address("56", "avenue de l'hippodrome", "54652", "HorseTown");
+        petStore.setAddress(address3);
+        em.persist(address3);
 
 //        Création d'un nouveau produit
-        Product product = new Product("gamelle high-tech", "label", ProdType.FOOD, 150.00);
+        Product product = new Product("high-tech mess tin", "label", ProdType.ACCESSORY, 150.00);
         petStore.addProduct(product);
+        Product product2 = new Product("chicken kibble", "label", ProdType.FOOD, 8.00);
+        petStore.addProduct(product2);
+        Product product3 = new Product(" cat shampoo", "label", ProdType.CLEANING, 6.00);
+        petStore.addProduct(product3);
 
 //        Insertion d'un nouveau poisson
         Fish fish = new Fish();
@@ -51,8 +68,14 @@ public class TestPets {
         Cat cat = new Cat();
         cat.setBirth(new Date());
         cat.setColor("gris");
-        cat.setChipId("CHIPID");
+        cat.setChipId("CHIPID12");
         petStore.addAnimal(cat);
+
+        Cat cat2 = new Cat();
+        cat2.setBirth(new Date());
+        cat2.setColor("black");
+        cat2.setChipId("CHIPID23");
+        petStore.addAnimal(cat2);
 
         em.persist(petStore);
 
