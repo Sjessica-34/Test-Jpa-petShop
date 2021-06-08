@@ -2,10 +2,11 @@ package fr.diginamic.petshop.entities;
 
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "ADRESS")
-public class Address {
+public class Address implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -15,7 +16,7 @@ public class Address {
     private String zipCode;
     private String city;
 
-    @OneToOne
+    @OneToOne(mappedBy = "address")
     private PetStore petStore;
 
     public Address() {
@@ -81,8 +82,13 @@ public class Address {
         return petStore;
     }
 
+
     public void setPetStore(PetStore petStore) {
-        this.petStore = petStore;
+        if (petStore == null) {
+            petStore.setAddress(null);
+        } else {
+            petStore.setAddress(this);
+        }
     }
 
     @Override

@@ -3,10 +3,11 @@ package fr.diginamic.petshop.entities;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "CAT")
-public class Cat extends Animal {
+public class Cat extends Animal implements Serializable {
     private String chipId;
 
     public Cat() {

@@ -1,12 +1,13 @@
 package fr.diginamic.petshop.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "PRODUCT")
-public class Product {
+public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -93,13 +94,19 @@ public class Product {
         this.petStores = petStores;
     }
 
-    public void addPetStore(PetStore petStores) {
-        if (petStores == null) {
-            return;
+    public void addPetStore(PetStore petStore) {
+        if (petStore != null) {
+            petStore.addProduct(this); // le reste en caché dans add product
+
         }
-        petStores.getProducts().add(this);
-        this.petStores.add(petStores);
     }
+
+    public void removePetStore(PetStore petStore) {
+        if (petStore != null) {
+            petStore.removeProduct(this);
+        }
+    }
+
 
     @Override
     public String toString() {

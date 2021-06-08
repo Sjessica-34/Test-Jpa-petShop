@@ -1,12 +1,13 @@
 package fr.diginamic.petshop.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "ANIMAL")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Animal {
+public class Animal implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -58,7 +59,7 @@ public class Animal {
 
     public void setPetStore(PetStore petStore) {
         if (this.petStore != null) {
-            this.petStore.getAnimals().remove(this);
+            this.petStore.getAnimals().remove(this); // attention ne pas faire remove.animal (boucle infinie)
         }
 
         this.petStore = petStore;

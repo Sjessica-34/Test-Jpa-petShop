@@ -1,12 +1,13 @@
 package fr.diginamic.petshop.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "PET_STORE")
-public class PetStore {
+public class PetStore implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -14,13 +15,13 @@ public class PetStore {
     private String name;
     private String managerName;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private Address address;
 
     @OneToMany(mappedBy = "petStore", cascade = CascadeType.PERSIST)
     private Set<Animal> animals;
 
-    @ManyToMany(cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "pet_store_product",
             joinColumns = @JoinColumn(name = "id_pet_store", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "id_product", referencedColumnName = "id")
@@ -93,18 +94,31 @@ public class PetStore {
     }
 
     public void addProduct(Product product) {
-        if (product == null) {
-            return;
+        if (product != null) {
+            this.getProducts().add(product);
+            product.getPetStores().add(this);
         }
-        product.addPetStore(this);
     }
 
     public void addAnimal(Animal animal) {
-        if (animal == null) {
-            return;
+        if (animal != null) {
+            animal.setPetStore(this);
         }
-        animal.setPetStore(this);
     }
+
+    public void removeProduct(Product product) {
+        if (product != null){
+            product.getPetStores().remove(this);
+            this.getProducts().remove(product);
+        }
+    }
+
+    public void removeAnimal(Animal animal) {
+        if (animal != null) {
+            animal.setPetStore(null);
+        }
+    }
+
 
     @Override
     public String toString() {

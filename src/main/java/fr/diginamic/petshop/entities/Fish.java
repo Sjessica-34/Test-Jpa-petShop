@@ -1,10 +1,11 @@
 package fr.diginamic.petshop.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "FISH")
-public class Fish extends Animal {
+public class Fish extends Animal implements Serializable {
     @Enumerated(EnumType.STRING)
     private FishLivEnv livingEnv;
 
